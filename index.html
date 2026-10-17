@@ -140,11 +140,10 @@ input:focus{border-color:var(--brand);outline:none}
       <form id="leadForm" novalidate>
         <label for="nombre">Nombre</label>
         <input type="text" id="nombre" autocomplete="name" required>
-        <p class="hint">Déjanos al menos un medio de contacto: correo o WhatsApp.</p>
         <label for="email">Correo electrónico <span class="opt-l">(opcional)</span></label>
         <input type="email" id="email" autocomplete="email" placeholder="tucorreo@ejemplo.com">
-        <label for="tel">WhatsApp <span class="opt-l">(opcional)</span></label>
-        <input type="tel" id="tel" autocomplete="tel" placeholder="10 dígitos">
+        <label for="tel">WhatsApp</label>
+        <input type="tel" id="tel" autocomplete="tel" inputmode="numeric" placeholder="10 dígitos">
         <label class="check"><input type="checkbox" id="consent"><span>Acepto que me contacten sobre mi resultado y el tratamiento de mis datos según el aviso de privacidad.</span></label>
         <p class="err" id="err" role="alert"></p>
         <button class="btn" type="submit" id="send">Enviar y recibir mi plan</button>
@@ -259,9 +258,8 @@ $("leadForm").addEventListener("submit", async e => {
   const nombre = $("nombre").value.trim(), email = $("email").value.trim(), tel = $("tel").value.replace(/\D/g,"");
   const err = $("err"); err.textContent = "";
   if(nombre.length < 2) return err.textContent = "Escribe tu nombre.";
-  if(!email && !tel) return err.textContent = "Escribe tu correo o tu WhatsApp para poder contactarte.";
   if(email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return err.textContent = "Revisa tu correo, parece incompleto.";
-  if(tel && tel.length < 10) return err.textContent = "Escribe tu WhatsApp con 10 dígitos.";
+  if(tel.length < 10) return err.textContent = "Escribe tu número de WhatsApp a 10 dígitos.";
   if(!$("consent").checked) return err.textContent = "Marca la casilla para continuar.";
 
   const payload = {
